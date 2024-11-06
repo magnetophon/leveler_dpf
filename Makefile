@@ -91,7 +91,8 @@ FAUSTPP_ARGS = \
 	-Dlv2uri="$(call AS_LV2_URI,$(1))" \
 	-Dversion_major=$(VERSION_MAJOR) \
 	-Dversion_minor=$(VERSION_MINOR) \
-	-Dversion_micro=$(VERSION_MICRO)
+	-Dversion_micro=$(VERSION_MICRO) \
+    -X-double
 
 bin/fadeli-%.lv2/manifest.ttl: dsp/%.dsp template/LV2/manifest.ttl faustpp
 	mkdir -p bin/fadeli-$*.lv2
