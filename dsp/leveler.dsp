@@ -11,15 +11,11 @@ ebu = library("ebur128.lib");
 ex = library("expanders.lib");
 import("stdfaust.lib");
 
-
-
 process = leveler_sc(target)~(_, _);
-
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                    GUI                                    //
 ///////////////////////////////////////////////////////////////////////////////
-
 
 leveler_meter_gain = hbargraph("v:/[1][unit:dB]gain",-50,50);
 bp = checkbox("v:/[2]bypass") : si.smoo;
@@ -40,7 +36,6 @@ init_leveler_speed = 20;
 //                                 LUFS METER                                //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 lk2_var(Tg)= par(i,2,kfilter : zi) :> 4.342944819 * log(max(1e-12)) : -(0.691) with {
   // maximum assumed sample rate is 192k
   maxSR = 192000;
@@ -51,7 +46,6 @@ lk2_var(Tg)= par(i,2,kfilter : zi) :> 4.342944819 * log(max(1e-12)) : -(0.691) w
   kfilter = ebu.prefilter;
 };
 
-
 lk2 = lk2_var(3);
 lk2_short = lk2_var(0.4);
 lufs_meter(l,r) = l,r <: l, attach(r, (lk2 : vbargraph("[unit:dB]out-lufs-s",-120,0))) : _,_;
@@ -60,14 +54,11 @@ lufs_meter(l,r) = l,r <: l, attach(r, (lk2 : vbargraph("[unit:dB]out-lufs-s",-12
 //                                  LEVELER                                  //
 ///////////////////////////////////////////////////////////////////////////////
 
-
 leveler_sc(target,fl,fr,l,r) =
   (calc(lk2_short(fl,fr))*(1-bp)+bp)
   <: (_*l,_*r)
 with {
-
   lp1p(cf) = si.smooth(ba.tau2pole(1/(2*ma.PI*cf)));
-
   calc(lufs) = FB(lufs)~_: ba.db2linear;
   FB(lufs,prev_gain) =
     (target - lufs)
@@ -93,5 +84,4 @@ with {
   gate_rel = 0.3;
   knee = 12;
   prePost = 1;
-
 };
