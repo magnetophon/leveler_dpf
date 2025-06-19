@@ -5,7 +5,7 @@ declare license "MIT";
 declare copyright "2024, Dario Sanfilippo";
 
 // Idea by Andrew Simper, Cytomic:  https://cytomic.com/files/dsp/DynamicSmoothing.pdf
-// Implementation by Dario Sanfilippo
+// Implementation by Dario Sanfilippo: https://github.com/dariosanfilippo
 
 import("stdfaust.lib");
 

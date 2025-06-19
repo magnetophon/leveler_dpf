@@ -121,6 +121,8 @@ with {
 
   leveler_speed_brake(sc) = expander(sc) * leveler_speed;
 
+  // Brake idea and implementation: Klaus Scheuermann⁩,  https://github.com/trummerschlunk
+
   expander(x) = (ex.peak_expansion_gain_mono_db(maxHold,strength,leveler_brake_thresh,range,gate_att,hold,gate_rel,knee,prePost,x)
                  : ba.db2linear
                  :max(0)
